@@ -1,0 +1,45 @@
+components:
+  schemas:
+    Error:
+      additionalProperties: false
+      properties:
+        errors:
+          type: object
+        message:
+          type: string
+      required:
+      - message
+      title: Error
+      type: object
+    TestResponse:
+      additionalProperties: false
+      description: Test response
+      properties:
+        message:
+          type: string
+      title: TestResponse
+      type: object
+info:
+  description: Hangboard hard!!!!
+  title: Hangboard
+  version: 1.0.0
+openapi: 3.0.2
+paths:
+  /api/hello:
+    get:
+      description: Return the test response
+      operationId: get_hello
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestResponse'
+          description: Test response
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+
