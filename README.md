@@ -15,6 +15,7 @@ rm api.yml
 python -m service.python.hangboard_service.genspec > api.yml
 ```
 ## Generating the Typescript
+With the service running:
 ```
-npx openapi-typescript api.yml -o ui/src/gensrc/api.ts
+npx swagger-typescript-api -p http://127.0.0.1:5000/api/swagger.json -o ./src/gensrc/api --modular
 ```

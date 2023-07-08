@@ -1,14 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
 
-function App() {
+import './App.css';
+import MessageBox from './MessageBox';
+
+const App = () => {
+  const [lastMessage, setLastMessage] = useState("hello world");
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <MessageBox/>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <div>
+          <p>
+            {lastMessage}
+          </p>
+        </div>
         <a
           className="App-link"
           href="https://reactjs.org"
