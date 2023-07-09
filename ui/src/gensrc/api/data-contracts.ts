@@ -9,6 +9,25 @@
  * ---------------------------------------------------------------
  */
 
+/**
+ * CreateAccountRequest
+ * Request to create an account
+ */
+export interface CreateAccountRequest {
+  email: string;
+  password: string;
+  username: string;
+}
+
+/**
+ * CreateAccountResponse
+ * Response to account creation
+ */
+export interface CreateAccountResponse {
+  message?: string;
+  success?: boolean;
+}
+
 /** Error */
 export interface Error {
   errors?: object;
