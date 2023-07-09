@@ -4,7 +4,11 @@ from logging import Logger
 from flask_rebar import errors, Rebar, SwaggerV3Generator
 
 
-from .hangboard_models import TestResponse
+from .hangboard_models import (
+    TestResponse,
+    CreateAccountRequest,
+    CreateAccountResponse
+)
 
 logger = Logger("Hangboard.service")
 
@@ -30,3 +34,15 @@ swagger_gen.description = "Hangboard hard!!!!"
 def get_hello():
     """Return the test response"""
     return {"message": "hello world!!"}
+
+
+@registry.handles(
+    rule='/join',
+    method='POST',
+    request_body_schema=CreateAccountRequest(),
+    response_body_schema={200: CreateAccountResponse()}
+)
+def create_todo():
+    body = rebar.validated_body
+    description = body['username']
+    print()
