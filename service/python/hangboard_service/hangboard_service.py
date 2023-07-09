@@ -1,9 +1,9 @@
 """REST endpoints for Hangboard"""
-from logging import Logger
+from logging import Logger, INFO
 
 from flask_rebar import errors, Rebar, SwaggerV3Generator
 
-
+from .account.account_manager import AccountManager
 from .hangboard_models import (
     TestResponse,
     CreateAccountRequest,
@@ -11,6 +11,7 @@ from .hangboard_models import (
 )
 
 logger = Logger("Hangboard.service")
+logger.setLevel(INFO)
 
 
 rebar = Rebar()
@@ -25,6 +26,9 @@ swagger_gen = registry.swagger_generator
 swagger_gen.title = "Hangboard"
 swagger_gen.description = "Hangboard hard!!!!"
 
+# GLOBAL OBJECTS
+account_manager = AccountManager()
+
 
 @registry.handles(
     rule="/hello",
@@ -37,12 +41,21 @@ def get_hello():
 
 
 @registry.handles(
-    rule='/join',
-    method='POST',
+    rule="/join",
+    method="POST",
     request_body_schema=CreateAccountRequest(),
     response_body_schema={200: CreateAccountResponse()}
 )
-def create_todo():
+def create_account():
     body = rebar.validated_body
-    description = body['username']
-    print()
+    username = body["username"]
+    email = body["email"]
+    password = body["password"]
+
+    try:
+        account_manager.add_user(username, email, password)
+        logger.info(f"Successfully created account for {username}")
+        return {"success": True, "message": ""}
+    except ValueError as e:
+        logger.error(f"Error creating account: {e}")
+        return {"success": False, "message": str(e)}
