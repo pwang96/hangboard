@@ -9,8 +9,8 @@
  * ---------------------------------------------------------------
  */
 
-import { Error, TestResponse } from "./data-contracts.ts";
-import { HttpClient, RequestParams } from "./http-client.ts";
+import { Error, TestResponse } from "./data-contracts";
+import { HttpClient, RequestParams } from "./http-client";
 
 export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
