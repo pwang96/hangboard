@@ -1,5 +1,6 @@
 """Account manager module"""
 import logging
+from multiprocessing import Value
 
 from .user import User
 
@@ -10,7 +11,7 @@ class AccountManager:
     """Class for managing accounts"""
     def __init__(self):
         self.users: dict[int, User] = {}
-        self.existing_usernames = set()
+        self.username_to_id: dict[str, int] = {}
         self.current_id = 0
 
     def add_user(self, username: str, email: str, password: str) -> None:
@@ -19,7 +20,7 @@ class AccountManager:
         This does some validation that the username does not exist already.
         TODO: make sure email is not re-used.
         """
-        if username in self.existing_usernames:
+        if username in self.username_to_id:
             logger.warn(f"{username} already exists")
             raise ValueError(f"{username} already exists in the system")
 
@@ -27,8 +28,15 @@ class AccountManager:
         self.current_id += 1
         logger.info(f"Adding user {username} with {user_id=}")
         new_user = User(user_id, username, email, password)
-        self.existing_usernames.add(username)
+        self.username_to_id[username] = user_id
 
         self.users[user_id] = new_user
 
+    def login(self, username: str, password: str) -> bool:
+        """Validate that a username/password combination is valid"""
+        user_id = self.username_to_id.get(username, None)
+        if user_id is None:
+            raise ValueError(f"{username} does not exist in the system")
 
+        user = self.users[user_id]
+        return password == user.password

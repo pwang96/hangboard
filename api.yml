@@ -37,6 +37,27 @@ components:
       - message
       title: Error
       type: object
+    LoginRequest:
+      additionalProperties: false
+      description: Request to login
+      properties:
+        password:
+          type: string
+        username:
+          type: string
+      required:
+      - password
+      - username
+      title: LoginRequest
+      type: object
+    LoginResponse:
+      additionalProperties: false
+      description: Response to login
+      properties:
+        success:
+          type: boolean
+      title: LoginResponse
+      type: object
     TestResponse:
       additionalProperties: false
       description: Test response
@@ -70,7 +91,7 @@ paths:
           description: Error
   /api/join:
     post:
-      operationId: create_todo
+      operationId: create_account
       requestBody:
         content:
           application/json:
@@ -84,6 +105,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreateAccountResponse'
           description: Response to account creation
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+  /api/login:
+    post:
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          description: Response to login
         default:
           content:
             application/json:

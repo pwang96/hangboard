@@ -2,6 +2,7 @@
 
 from marshmallow import fields, Schema
 from flask_rebar import RequestSchema
+from werkzeug import Request
 
 
 class TestResponse(Schema):
@@ -24,3 +25,14 @@ class CreateAccountResponse(Schema):
 
     success = fields.Boolean()
     message = fields.String()
+
+class LoginRequest(RequestSchema):
+    """Request to login"""
+
+    username = fields.String(required=True)
+    password = fields.String(required=True)
+
+class LoginResponse(Schema):
+    """Response to login"""
+
+    success = fields.Boolean()
