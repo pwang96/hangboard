@@ -5,6 +5,8 @@ from flask_rebar import errors, Rebar, SwaggerV3Generator
 
 from .account.account_manager import AccountManager
 from .hangboard_models import (
+    LoginRequest,
+    LoginResponse,
     TestResponse,
     CreateAccountRequest,
     CreateAccountResponse
@@ -59,3 +61,26 @@ def create_account():
     except ValueError as e:
         logger.error(f"Error creating account: {e}")
         return {"success": False, "message": str(e)}
+
+
+@registry.handles(
+    rule="/login",
+    method="POST",
+    request_body_schema=LoginRequest(),
+    response_body_schema={200: LoginResponse()}
+)
+def login():
+    body = rebar.validated_body
+    username = body["username"]
+    password = body["password"]
+
+    try:
+        success = account_manager.login(username, password)
+        if not success:
+            logger.info(f"Incorrect password entered for {username}")
+            raise errors.Forbidden(msg=f"Incorrect password for {username}")
+        logger.info(f"Successfully logged in {username}")
+        return {"success": True}
+    except ValueError as e:
+        logger.error(f"Error logging in {username}: {e}")
+        raise errors.Forbidden(msg=f"{username} does not exist in the system")

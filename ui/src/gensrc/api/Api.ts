@@ -9,7 +9,14 @@
  * ---------------------------------------------------------------
  */
 
-import { CreateAccountRequest, CreateAccountResponse, Error, TestResponse } from "./data-contracts";
+import {
+  CreateAccountRequest,
+  CreateAccountResponse,
+  Error,
+  LoginRequest,
+  LoginResponse,
+  TestResponse,
+} from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
 export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
@@ -29,12 +36,27 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
   /**
    * No description
    *
-   * @name CreateTodo
+   * @name CreateAccount
    * @request POST:/api/join
    */
-  createTodo = (data: CreateAccountRequest, params: RequestParams = {}) =>
+  createAccount = (data: CreateAccountRequest, params: RequestParams = {}) =>
     this.request<CreateAccountResponse, Error>({
       path: `/api/join`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @name Login
+   * @request POST:/api/login
+   */
+  login = (data: LoginRequest, params: RequestParams = {}) =>
+    this.request<LoginResponse, Error>({
+      path: `/api/login`,
       method: "POST",
       body: data,
       type: ContentType.Json,

@@ -35,6 +35,23 @@ export interface Error {
 }
 
 /**
+ * LoginRequest
+ * Request to login
+ */
+export interface LoginRequest {
+  password: string;
+  username: string;
+}
+
+/**
+ * LoginResponse
+ * Response to login
+ */
+export interface LoginResponse {
+  success?: boolean;
+}
+
+/**
  * TestResponse
  * Test response
  */
