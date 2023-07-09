@@ -1,17 +1,17 @@
-import { useState } from 'react';
-
 import './App.css';
 import AppHeader from './AppHeader';
+import AppFooter from './AppFooter';
 import MessageBox from './MessageBox';
+import WorkoutContainer from './WorkoutContainer';
 
 const App = () => {
 
   return (
     <div className="App">
       <AppHeader />
-      <div>
-        <MessageBox/>
-      </div>
+      <WorkoutContainer />
+      <MessageBox />
+      <AppFooter />
     </div>
   );
 }

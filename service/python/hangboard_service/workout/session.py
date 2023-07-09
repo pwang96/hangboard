@@ -1,6 +1,8 @@
 """Workout session"""
 import datetime
 
+from .segment import Segment
+
 
 class Session:
     """Session class
@@ -16,6 +18,8 @@ class Session:
             start (datetime.datetime): Start time of the session
         """
         self.segments = []
+        self.start = start
 
     def add_segment(self, segment: Segment) -> None:
         """Add a workout segment"""
+        self.segments.append(segment)
