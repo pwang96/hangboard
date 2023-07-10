@@ -101,6 +101,4 @@ def get_users():
             }
         )
 
-    print(users)
-
     return {"users": users}
