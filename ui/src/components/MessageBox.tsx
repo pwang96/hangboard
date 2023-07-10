@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { MessageApi } from "../api/MessageApi";
 
-function MessageBox(props) {
+function MessageBox() {
   const [message, setMessage] = useState("no message");
   useEffect(() => {
     MessageApi.getMessage().then((testResponse) => {
