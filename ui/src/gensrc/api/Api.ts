@@ -16,6 +16,7 @@ import {
   LoginRequest,
   LoginResponse,
   TestResponse,
+  Users,
 } from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
@@ -60,6 +61,19 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
       method: "POST",
       body: data,
       type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @name GetUsers
+   * @request GET:/api/users
+   */
+  getUsers = (params: RequestParams = {}) =>
+    this.request<Users, Error>({
+      path: `/api/users`,
+      method: "GET",
       format: "json",
       ...params,
     });

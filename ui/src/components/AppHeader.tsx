@@ -22,9 +22,9 @@ export default function AppHeader(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Hangboard
+            <a href="/">Hangboard</a>
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" href="/login">Login</Button>
         </Toolbar>
       </AppBar>
     </Box>

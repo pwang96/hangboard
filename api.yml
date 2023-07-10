@@ -6,12 +6,18 @@ components:
       properties:
         email:
           type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
         password:
           type: string
         username:
           type: string
       required:
       - email
+      - first_name
+      - last_name
       - password
       - username
       title: CreateAccountRequest
@@ -24,6 +30,8 @@ components:
           type: string
         success:
           type: boolean
+      required:
+      - success
       title: CreateAccountResponse
       type: object
     Error:
@@ -56,6 +64,8 @@ components:
       properties:
         success:
           type: boolean
+      required:
+      - success
       title: LoginResponse
       type: object
     TestResponse:
@@ -65,6 +75,37 @@ components:
         message:
           type: string
       title: TestResponse
+      type: object
+    User:
+      additionalProperties: false
+      description: User
+      properties:
+        email:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        username:
+          type: string
+      required:
+      - email
+      - first_name
+      - last_name
+      - username
+      title: User
+      type: object
+    Users:
+      additionalProperties: false
+      description: List of users
+      properties:
+        users:
+          items:
+            $ref: '#/components/schemas/User'
+          type: array
+      required:
+      - users
+      title: Users
       type: object
 info:
   description: Hangboard hard!!!!
@@ -127,6 +168,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
           description: Response to login
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+  /api/users:
+    get:
+      operationId: get_users
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+          description: List of users
         default:
           content:
             application/json:

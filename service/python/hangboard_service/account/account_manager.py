@@ -14,7 +14,7 @@ class AccountManager:
         self.username_to_id: dict[str, int] = {}
         self.current_id = 0
 
-    def add_user(self, username: str, email: str, password: str) -> None:
+    def add_user(self, username: str, first_name: str, last_name: str, email: str, password: str) -> None:
         """Add a user
 
         This does some validation that the username does not exist already.
@@ -27,7 +27,14 @@ class AccountManager:
         user_id = self.current_id
         self.current_id += 1
         logger.info(f"Adding user {username} with {user_id=}")
-        new_user = User(user_id, username, email, password)
+        new_user = User(
+            user_id=user_id,
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            password=password,
+        )
         self.username_to_id[username] = user_id
 
         self.users[user_id] = new_user

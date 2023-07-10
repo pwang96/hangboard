@@ -17,13 +17,15 @@ class CreateAccountRequest(RequestSchema):
     """Request to create an account"""
 
     username = fields.String(required=True)
+    first_name = fields.String(required=True)
+    last_name = fields.String(required=True)
     email = fields.Email(required=True)
     password = fields.String(required=True)
 
 class CreateAccountResponse(Schema):
     """Response to account creation"""
 
-    success = fields.Boolean()
+    success = fields.Boolean(required=True)
     message = fields.String()
 
 class LoginRequest(RequestSchema):
@@ -35,4 +37,17 @@ class LoginRequest(RequestSchema):
 class LoginResponse(Schema):
     """Response to login"""
 
-    success = fields.Boolean()
+    success = fields.Boolean(required=True)
+
+class User(Schema):
+    """User"""
+
+    username = fields.String(required=True)
+    first_name = fields.String(required=True)
+    last_name = fields.String(required=True)
+    email = fields.Email(required=True)
+
+class Users(Schema):
+    """List of users"""
+
+    users = fields.List(fields.Nested(User), required=True)

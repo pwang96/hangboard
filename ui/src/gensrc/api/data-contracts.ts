@@ -15,6 +15,8 @@
  */
 export interface CreateAccountRequest {
   email: string;
+  first_name: string;
+  last_name: string;
   password: string;
   username: string;
 }
@@ -25,7 +27,7 @@ export interface CreateAccountRequest {
  */
 export interface CreateAccountResponse {
   message?: string;
-  success?: boolean;
+  success: boolean;
 }
 
 /** Error */
@@ -48,7 +50,7 @@ export interface LoginRequest {
  * Response to login
  */
 export interface LoginResponse {
-  success?: boolean;
+  success: boolean;
 }
 
 /**
@@ -57,4 +59,23 @@ export interface LoginResponse {
  */
 export interface TestResponse {
   message?: string;
+}
+
+/**
+ * User
+ * User
+ */
+export interface User {
+  email: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+}
+
+/**
+ * Users
+ * List of users
+ */
+export interface Users {
+  users: User[];
 }

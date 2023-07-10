@@ -9,7 +9,8 @@ from .hangboard_models import (
     LoginResponse,
     TestResponse,
     CreateAccountRequest,
-    CreateAccountResponse
+    CreateAccountResponse,
+    Users
 )
 
 logger = Logger("Hangboard.service")
@@ -52,10 +53,12 @@ def create_account():
     body = rebar.validated_body
     username = body["username"]
     email = body["email"]
+    first_name = body["first_name"]
+    last_name = body["last_name"]
     password = body["password"]
 
     try:
-        account_manager.add_user(username, email, password)
+        account_manager.add_user(username, first_name, last_name, email, password)
         logger.info(f"Successfully created account for {username}")
         return {"success": True, "message": ""}
     except ValueError as e:
@@ -84,3 +87,24 @@ def login():
     except ValueError as e:
         logger.error(f"Error logging in {username}: {e}")
         raise errors.Forbidden(msg=f"{username} does not exist in the system")
+
+
+@registry.handles(
+    rule="/users",
+    method="GET",
+    response_body_schema={200: Users()}
+)
+def get_users():
+    users = []
+    print(account_manager.users)
+    for user in account_manager.users.values():
+        users.append({
+            "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+        })
+
+    print(users)
+
+    return {"users": users}
