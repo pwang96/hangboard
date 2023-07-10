@@ -10,6 +10,7 @@ class TestResponse(Schema):
 
     message = fields.String()
 
+
 ####################
 # Account Management
 ####################
@@ -22,11 +23,13 @@ class CreateAccountRequest(RequestSchema):
     email = fields.Email(required=True)
     password = fields.String(required=True)
 
+
 class CreateAccountResponse(Schema):
     """Response to account creation"""
 
     success = fields.Boolean(required=True)
     message = fields.String()
+
 
 class LoginRequest(RequestSchema):
     """Request to login"""
@@ -34,10 +37,12 @@ class LoginRequest(RequestSchema):
     username = fields.String(required=True)
     password = fields.String(required=True)
 
+
 class LoginResponse(Schema):
     """Response to login"""
 
     success = fields.Boolean(required=True)
+
 
 class User(Schema):
     """User"""
@@ -46,6 +51,7 @@ class User(Schema):
     first_name = fields.String(required=True)
     last_name = fields.String(required=True)
     email = fields.Email(required=True)
+
 
 class Users(Schema):
     """List of users"""

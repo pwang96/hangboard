@@ -12,7 +12,9 @@ class SegmentConfiguration:
     def __init__(self, cycle_time_sec: int):
         self.hangs = []
         self.rest_between_hangs_sec = []  # length len(self.hangs) - 1
-        self.cycle_time_sec = cycle_time_sec  # All hangs make one cycle; cycles repeat on this cadence.
+        self.cycle_time_sec = (
+            cycle_time_sec  # All hangs make one cycle; cycles repeat on this cadence.
+        )
 
 
 class Segment:
@@ -20,5 +22,6 @@ class Segment:
 
     A segment of a workout is a grouping of a efforts with one configuration.
     """
+
     def __init__(self, config: SegmentConfiguration):
         self.config = config

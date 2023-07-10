@@ -5,6 +5,7 @@ from typing import Any
 
 class InMemoryDB:
     """In memory database"""
+
     def __init__(self):
         self.tables = defaultdict(lambda: defaultdict())
 
@@ -19,4 +20,3 @@ class InMemoryDB:
         if key not in self.tables[table]:
             raise RuntimeError(f"No key {key} in {table}")
         return self.tables[table][key]
-

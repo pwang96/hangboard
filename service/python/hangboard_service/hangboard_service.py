@@ -10,7 +10,7 @@ from .hangboard_models import (
     TestResponse,
     CreateAccountRequest,
     CreateAccountResponse,
-    Users
+    Users,
 )
 
 logger = Logger("Hangboard.service")
@@ -34,9 +34,7 @@ account_manager = AccountManager()
 
 
 @registry.handles(
-    rule="/hello",
-    method="GET",
-    response_body_schema={200: TestResponse()}
+    rule="/hello", method="GET", response_body_schema={200: TestResponse()}
 )
 def get_hello():
     """Return the test response"""
@@ -47,7 +45,7 @@ def get_hello():
     rule="/join",
     method="POST",
     request_body_schema=CreateAccountRequest(),
-    response_body_schema={200: CreateAccountResponse()}
+    response_body_schema={200: CreateAccountResponse()},
 )
 def create_account():
     body = rebar.validated_body
@@ -70,7 +68,7 @@ def create_account():
     rule="/login",
     method="POST",
     request_body_schema=LoginRequest(),
-    response_body_schema={200: LoginResponse()}
+    response_body_schema={200: LoginResponse()},
 )
 def login():
     body = rebar.validated_body
@@ -89,21 +87,19 @@ def login():
         raise errors.Forbidden(msg=f"{username} does not exist in the system")
 
 
-@registry.handles(
-    rule="/users",
-    method="GET",
-    response_body_schema={200: Users()}
-)
+@registry.handles(rule="/users", method="GET", response_body_schema={200: Users()})
 def get_users():
     users = []
     print(account_manager.users)
     for user in account_manager.users.values():
-        users.append({
-            "username": user.username,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "email": user.email,
-        })
+        users.append(
+            {
+                "username": user.username,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "email": user.email,
+            }
+        )
 
     print(users)
 

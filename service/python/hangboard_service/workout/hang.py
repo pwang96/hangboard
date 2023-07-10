@@ -31,7 +31,15 @@ class Hang:
     A Hang represents one effort. This encodes all metadata about the hang and the effort.
     """
 
-    def __init__(self, hang_start: datetime.datetime, edge: Edge, hand: Hand, weight: Weight, hangtime: int, notes: Optional[str] = None):
+    def __init__(
+        self,
+        hang_start: datetime.datetime,
+        edge: Edge,
+        hand: Hand,
+        weight: Weight,
+        hangtime: int,
+        notes: Optional[str] = None,
+    ):
         """Initializer
 
         Args:
