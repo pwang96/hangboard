@@ -6,7 +6,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import Paper from "@mui/material/Paper";
 
-export default function AppFooter(props) {
+export default function AppFooter() {
   const [value, setValue] = useState();
 
   return (

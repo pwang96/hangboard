@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 
 import { AccountApi } from "../api/AccountApi";
 
-export default function SignUp(props) {
+export default function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

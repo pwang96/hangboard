@@ -18,8 +18,8 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<WorkoutContainer />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login user={user}/>} />
+          <Route path="/signup" element={<SignUp setUser={setUser}/>} />
         </Routes>
       </BrowserRouter>
       <AppFooter />
