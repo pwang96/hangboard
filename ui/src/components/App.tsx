@@ -14,10 +14,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <AppHeader user={user}/>
+      <AppHeader user={user} />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<WorkoutContainer user={user}/>} />
+          <Route path="/" element={<WorkoutContainer user={user} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<SignUp setUser={setUser} />} />
         </Routes>

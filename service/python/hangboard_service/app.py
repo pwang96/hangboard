@@ -31,7 +31,9 @@ def decode_jwt_if_exists() -> Optional[dict]:
         logger.warn("Authorization header has the wrong format.")
         return None
 
-    decoded_jwt = jwt.decode(header_parts[1], JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
+    decoded_jwt = jwt.decode(
+        header_parts[1], JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM]
+    )
     print(decoded_jwt)
     return decoded_jwt
 

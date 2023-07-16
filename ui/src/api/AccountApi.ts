@@ -42,7 +42,7 @@ export class AccountApi {
       .then((resp) => resp.data)
       .catch((err) => {
         console.log(err);
-        return { username: '', first_name: '', last_name: '', email: '' };
+        return { username: "", first_name: "", last_name: "", email: "" };
       });
   }
 }

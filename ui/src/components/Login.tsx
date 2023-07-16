@@ -22,8 +22,7 @@ export default function Login(props) {
       username: data.get("username")!.toString(),
       password: data.get("password")!.toString(),
     }).then((response) => {
-      AccountApi.getUser(data.get("username")!.toString())
-      .then((resp) => {
+      AccountApi.getUser(data.get("username")!.toString()).then((resp) => {
         props.setUser(resp);
       });
     });

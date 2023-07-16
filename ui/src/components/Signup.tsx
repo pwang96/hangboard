@@ -28,15 +28,15 @@ export default function SignUp(props) {
       username: data.get("username")!.toString(),
       password: data.get("password")!.toString(),
     }).then((response) => {
-        if (response.jwt !== undefined) {
-            localStorage.setItem("auth-token", response.jwt);
-            props.setUser({
-              email: data.get("email")!.toString(),
-              first_name: data.get("firstName")!.toString(),
-              last_name: data.get("lastName")!.toString(),
-              username: data.get("username")!.toString(),
-            });
-        }
+      if (response.jwt !== undefined) {
+        localStorage.setItem("auth-token", response.jwt);
+        props.setUser({
+          email: data.get("email")!.toString(),
+          first_name: data.get("firstName")!.toString(),
+          last_name: data.get("lastName")!.toString(),
+          username: data.get("username")!.toString(),
+        });
+      }
     });
   };
 

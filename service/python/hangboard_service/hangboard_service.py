@@ -63,7 +63,9 @@ def create_account():
     try:
         account_manager.add_user(username, first_name, last_name, email, password)
         logger.info(f"Successfully created account for {username}")
-        token = jwt.encode({"username": username}, key=JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+        token = jwt.encode(
+            {"username": username}, key=JWT_SECRET_KEY, algorithm=JWT_ALGORITHM
+        )
         return {"success": True, "jwt": token}
     except ValueError as e:
         logger.error(f"Error creating account: {e}")
@@ -93,10 +95,9 @@ def login():
         logger.error(f"Error logging in {username}: {e}")
         raise errors.Forbidden(msg=f"{username} does not exist in the system")
 
+
 @registry.handles(
-    rule="/user/<string:username>",
-    method="GET",
-    response_body_schema={200: User()}
+    rule="/user/<string:username>", method="GET", response_body_schema={200: User()}
 )
 def get_user(username: str):
     user = account_manager.get_user_by_username(username)

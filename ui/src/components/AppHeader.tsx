@@ -23,12 +23,13 @@ export default function AppHeader(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <a href="/">Hangboard</a>
           </Typography>
-          {props.user === null ?
+          {props.user === null ? (
             <Button color="inherit" href="/login">
               Login
-            </Button> :
+            </Button>
+          ) : (
             <div>{props.user.username}</div>
-          }
+          )}
         </Toolbar>
       </AppBar>
     </Box>
