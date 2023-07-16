@@ -24,13 +24,6 @@ class CreateAccountRequest(RequestSchema):
     password = fields.String(required=True)
 
 
-class CreateAccountResponse(Schema):
-    """Response to account creation"""
-
-    success = fields.Boolean(required=True)
-    message = fields.String()
-
-
 class LoginRequest(RequestSchema):
     """Request to login"""
 
@@ -42,6 +35,7 @@ class LoginResponse(Schema):
     """Response to login"""
 
     success = fields.Boolean(required=True)
+    jwt = fields.String(reqiured=False)
 
 
 class User(Schema):

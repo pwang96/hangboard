@@ -22,18 +22,6 @@ components:
       - username
       title: CreateAccountRequest
       type: object
-    CreateAccountResponse:
-      additionalProperties: false
-      description: Response to account creation
-      properties:
-        message:
-          type: string
-        success:
-          type: boolean
-      required:
-      - success
-      title: CreateAccountResponse
-      type: object
     Error:
       additionalProperties: false
       properties:
@@ -62,6 +50,8 @@ components:
       additionalProperties: false
       description: Response to login
       properties:
+        jwt:
+          type: string
         success:
           type: boolean
       required:
@@ -144,8 +134,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateAccountResponse'
-          description: Response to account creation
+                $ref: '#/components/schemas/LoginResponse'
+          description: Response to login
         default:
           content:
             application/json:
@@ -174,6 +164,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Error
+  /api/user/{username}:
+    get:
+      operationId: get_user
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: User
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Error
+    parameters:
+    - in: path
+      name: username
+      required: true
+      schema:
+        type: string
+      style: simple
   /api/users:
     get:
       operationId: get_users

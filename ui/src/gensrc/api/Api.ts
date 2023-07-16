@@ -9,20 +9,10 @@
  * ---------------------------------------------------------------
  */
 
-import {
-  CreateAccountRequest,
-  CreateAccountResponse,
-  Error,
-  LoginRequest,
-  LoginResponse,
-  TestResponse,
-  Users,
-} from "./data-contracts";
+import { CreateAccountRequest, Error, LoginRequest, LoginResponse, TestResponse, User, Users } from "./data-contracts";
 import { ContentType, HttpClient, RequestParams } from "./http-client";
 
-export class Api<
-  SecurityDataType = unknown,
-> extends HttpClient<SecurityDataType> {
+export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * @description Return the test response
    *
@@ -43,7 +33,7 @@ export class Api<
    * @request POST:/api/join
    */
   createAccount = (data: CreateAccountRequest, params: RequestParams = {}) =>
-    this.request<CreateAccountResponse, Error>({
+    this.request<LoginResponse, Error>({
       path: `/api/join`,
       method: "POST",
       body: data,
@@ -63,6 +53,19 @@ export class Api<
       method: "POST",
       body: data,
       type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @name GetUser
+   * @request GET:/api/user/{username}
+   */
+  getUser = (username: string, params: RequestParams = {}) =>
+    this.request<User, Error>({
+      path: `/api/user/${username}`,
+      method: "GET",
       format: "json",
       ...params,
     });

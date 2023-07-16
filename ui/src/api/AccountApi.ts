@@ -1,9 +1,9 @@
 import { Api } from "../gensrc/api/Api";
 import {
   CreateAccountRequest,
-  CreateAccountResponse,
   LoginRequest,
   LoginResponse,
+  User,
 } from "../gensrc/api/data-contracts";
 
 const serviceBaseUrl = `${window.location.origin}`;
@@ -16,7 +16,7 @@ const api = new Api({
 export class AccountApi {
   static async createAccount(
     request: CreateAccountRequest,
-  ): Promise<CreateAccountResponse> {
+  ): Promise<LoginResponse> {
     return await api
       .createAccount(request)
       .then((resp) => resp.data)
@@ -33,6 +33,16 @@ export class AccountApi {
       .catch((err) => {
         console.log(err);
         return { success: false };
+      });
+  }
+
+  static async getUser(username: string): Promise<User> {
+    return await api
+      .getUser(username)
+      .then((resp) => resp.data)
+      .catch((err) => {
+        console.log(err);
+        return { username: '', first_name: '', last_name: '', email: '' };
       });
   }
 }

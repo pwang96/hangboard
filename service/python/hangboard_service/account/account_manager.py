@@ -1,6 +1,6 @@
 """Account manager module"""
 import logging
-from multiprocessing import Value
+from typing import Optional
 
 from .user import User
 
@@ -51,3 +51,10 @@ class AccountManager:
 
         user = self.users[user_id]
         return password == user.password
+
+    def get_user_by_username(self, username: str) -> Optional[User]:
+        """Get a user by their username"""
+        if username not in self.username_to_id:
+            return None
+
+        return self.users[self.username_to_id[username]]

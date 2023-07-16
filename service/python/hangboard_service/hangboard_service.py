@@ -1,6 +1,7 @@
 """REST endpoints for Hangboard"""
 from logging import Logger, INFO
 
+import jwt
 from flask_rebar import errors, Rebar, SwaggerV3Generator
 
 from .account.account_manager import AccountManager
@@ -9,12 +10,16 @@ from .hangboard_models import (
     LoginResponse,
     TestResponse,
     CreateAccountRequest,
-    CreateAccountResponse,
     Users,
+    User,
 )
 
 logger = Logger("Hangboard.service")
 logger.setLevel(INFO)
+
+# TODO Move the secret key
+JWT_SECRET_KEY = "secret"
+JWT_ALGORITHM = "HS256"
 
 
 rebar = Rebar()
@@ -45,7 +50,7 @@ def get_hello():
     rule="/join",
     method="POST",
     request_body_schema=CreateAccountRequest(),
-    response_body_schema={200: CreateAccountResponse()},
+    response_body_schema={200: LoginResponse()},
 )
 def create_account():
     body = rebar.validated_body
@@ -58,10 +63,11 @@ def create_account():
     try:
         account_manager.add_user(username, first_name, last_name, email, password)
         logger.info(f"Successfully created account for {username}")
-        return {"success": True, "message": ""}
+        token = jwt.encode({"username": username}, key=JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+        return {"success": True, "jwt": token}
     except ValueError as e:
         logger.error(f"Error creating account: {e}")
-        return {"success": False, "message": str(e)}
+        return {"success": False}
 
 
 @registry.handles(
@@ -81,16 +87,32 @@ def login():
             logger.info(f"Incorrect password entered for {username}")
             raise errors.Forbidden(msg=f"Incorrect password for {username}")
         logger.info(f"Successfully logged in {username}")
-        return {"success": True}
+        token = jwt.encode({"username": username}, key=JWT_SECRET_KEY)
+        return {"success": True, "jwt": token}
     except ValueError as e:
         logger.error(f"Error logging in {username}: {e}")
         raise errors.Forbidden(msg=f"{username} does not exist in the system")
+
+@registry.handles(
+    rule="/user/<string:username>",
+    method="GET",
+    response_body_schema={200: User()}
+)
+def get_user(username: str):
+    user = account_manager.get_user_by_username(username)
+    if user is None:
+        return errors.NotFound(msg=f"{username} does not exist in the system")
+    return {
+        "username": username,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "email": user.email,
+    }
 
 
 @registry.handles(rule="/users", method="GET", response_body_schema={200: Users()})
 def get_users():
     users = []
-    print(account_manager.users)
     for user in account_manager.users.values():
         users.append(
             {

@@ -21,15 +21,6 @@ export interface CreateAccountRequest {
   username: string;
 }
 
-/**
- * CreateAccountResponse
- * Response to account creation
- */
-export interface CreateAccountResponse {
-  message?: string;
-  success: boolean;
-}
-
 /** Error */
 export interface Error {
   errors?: object;
@@ -50,6 +41,7 @@ export interface LoginRequest {
  * Response to login
  */
 export interface LoginResponse {
+  jwt?: string;
   success: boolean;
 }
 

@@ -12,13 +12,20 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
-export default function Login() {
+import { AccountApi } from "../api/AccountApi";
+
+export default function Login(props) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+    AccountApi.login({
+      username: data.get("username")!.toString(),
+      password: data.get("password")!.toString(),
+    }).then((response) => {
+      AccountApi.getUser(data.get("username")!.toString())
+      .then((resp) => {
+        props.setUser(resp);
+      });
     });
   };
 
