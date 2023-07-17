@@ -111,9 +111,8 @@ def get_user(username: str):
         "email": user.email,
     }
 
-@registry.handles(
-    rule="/profile", method="GET", response_body_schema={200: User()}
-)
+
+@registry.handles(rule="/profile", method="GET", response_body_schema={200: User()})
 def get_profile():
     """Get the profile from the global object inserted by the JWT"""
     if g.user is not None:
