@@ -15,11 +15,11 @@ components:
         username:
           type: string
       required:
-      - email
-      - first_name
-      - last_name
-      - password
-      - username
+        - email
+        - first_name
+        - last_name
+        - password
+        - username
       title: CreateAccountRequest
       type: object
     Error:
@@ -30,7 +30,7 @@ components:
         message:
           type: string
       required:
-      - message
+        - message
       title: Error
       type: object
     LoginRequest:
@@ -42,8 +42,8 @@ components:
         username:
           type: string
       required:
-      - password
-      - username
+        - password
+        - username
       title: LoginRequest
       type: object
     LoginResponse:
@@ -55,7 +55,7 @@ components:
         success:
           type: boolean
       required:
-      - success
+        - success
       title: LoginResponse
       type: object
     TestResponse:
@@ -79,10 +79,10 @@ components:
         username:
           type: string
       required:
-      - email
-      - first_name
-      - last_name
-      - username
+        - email
+        - first_name
+        - last_name
+        - username
       title: User
       type: object
     Users:
@@ -91,10 +91,10 @@ components:
       properties:
         users:
           items:
-            $ref: '#/components/schemas/User'
+            $ref: "#/components/schemas/User"
           type: array
       required:
-      - users
+        - users
       title: Users
       type: object
 info:
@@ -108,17 +108,17 @@ paths:
       description: Return the test response
       operationId: get_hello
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TestResponse'
+                $ref: "#/components/schemas/TestResponse"
           description: Test response
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
           description: Error
   /api/join:
     post:
@@ -127,20 +127,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateAccountRequest'
+              $ref: "#/components/schemas/CreateAccountRequest"
         required: true
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                $ref: "#/components/schemas/LoginResponse"
           description: Response to login
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
           description: Error
   /api/login:
     post:
@@ -149,58 +149,74 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: "#/components/schemas/LoginRequest"
         required: true
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                $ref: "#/components/schemas/LoginResponse"
           description: Response to login
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
           description: Error
-  /api/user/{username}:
+  /api/profile:
     get:
-      operationId: get_user
+      description: Get the profile from the global object inserted by the JWT
+      operationId: get_profile
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
           description: User
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
+          description: Error
+  /api/user/{username}:
+    get:
+      operationId: get_user
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+          description: User
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
           description: Error
     parameters:
-    - in: path
-      name: username
-      required: true
-      schema:
-        type: string
-      style: simple
+      - in: path
+        name: username
+        required: true
+        schema:
+          type: string
+        style: simple
   /api/users:
     get:
       operationId: get_users
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Users'
+                $ref: "#/components/schemas/Users"
           description: List of users
         default:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
           description: Error
-

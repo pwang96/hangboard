@@ -67,6 +67,19 @@ export class Api<
       ...params,
     });
   /**
+   * @description Get the profile from the global object inserted by the JWT
+   *
+   * @name GetProfile
+   * @request GET:/api/profile
+   */
+  getProfile = (params: RequestParams = {}) =>
+    this.request<User, Error>({
+      path: `/api/profile`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+  /**
    * No description
    *
    * @name GetUser

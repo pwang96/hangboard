@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,6 +17,7 @@ import Container from "@mui/material/Container";
 import { AccountApi } from "../api/AccountApi";
 
 export default function Login(props) {
+  const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -22,9 +25,10 @@ export default function Login(props) {
       username: data.get("username")!.toString(),
       password: data.get("password")!.toString(),
     }).then((response) => {
-      AccountApi.getUser(data.get("username")!.toString()).then((resp) => {
-        props.setUser(resp);
-      });
+      if (response.jwt !== undefined) {
+        localStorage.setItem("auth-token", response.jwt);
+        navigate("/");
+      }
     });
   };
 

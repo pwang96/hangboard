@@ -45,4 +45,14 @@ export class AccountApi {
         return { username: "", first_name: "", last_name: "", email: "" };
       });
   }
+
+  static async getProfile(): Promise<User> {
+    return await api
+      .getProfile()
+      .then((resp) => resp.data)
+      .catch((err) => {
+        console.log(err);
+        return { username: "", first_name: "", last_name: "", email: "" };
+      });
+  }
 }

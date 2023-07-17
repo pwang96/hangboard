@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,6 +15,7 @@ import Container from "@mui/material/Container";
 import { AccountApi } from "../api/AccountApi";
 
 export default function SignUp(props) {
+  const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -30,12 +33,7 @@ export default function SignUp(props) {
     }).then((response) => {
       if (response.jwt !== undefined) {
         localStorage.setItem("auth-token", response.jwt);
-        props.setUser({
-          email: data.get("email")!.toString(),
-          first_name: data.get("firstName")!.toString(),
-          last_name: data.get("lastName")!.toString(),
-          username: data.get("username")!.toString(),
-        });
+        navigate("/");
       }
     });
   };

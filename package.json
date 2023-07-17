@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "@craco/craco": "^7.1.0"
+  },
+  "dependencies": {
+    "prettier": "^3.0.0"
   }
 }

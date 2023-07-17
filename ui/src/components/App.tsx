@@ -17,7 +17,7 @@ const App = () => {
       <AppHeader user={user} />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<WorkoutContainer user={user} />} />
+          <Route path="/" element={<WorkoutContainer />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/signup" element={<SignUp setUser={setUser} />} />
         </Routes>

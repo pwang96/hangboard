@@ -206,7 +206,8 @@ export class HttpClient<SecurityDataType = unknown> {
     const responseFormat = format || requestParams.format;
 
     const jwtToken = localStorage.getItem("auth-token");
-    console.log(`jwtToken is ${jwtToken}`);
+    const authParams =
+      jwtToken !== null ? { Authorization: `Bearer ${jwtToken}` } : {};
 
     return this.customFetch(
       `${baseUrl || this.baseUrl || ""}${path}${

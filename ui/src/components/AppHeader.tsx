@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,7 +8,16 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import { AccountApi } from "../api/AccountApi";
+import { User } from "../gensrc/api/data-contracts";
+
 export default function AppHeader(props) {
+  const [user, setUser] = useState<User | null>(null);
+  useEffect(() => {
+    AccountApi.getProfile().then((resp) => {
+      setUser(resp);
+    });
+  }, []);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -23,12 +34,12 @@ export default function AppHeader(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <a href="/">Hangboard</a>
           </Typography>
-          {props.user === null ? (
+          {user === null ? (
             <Button color="inherit" href="/login">
               Login
             </Button>
           ) : (
-            <div>{props.user.username}</div>
+            <div>{user.username}</div>
           )}
         </Toolbar>
       </AppBar>

@@ -2,6 +2,7 @@
 from logging import Logger, INFO
 
 import jwt
+from flask import g
 from flask_rebar import errors, Rebar, SwaggerV3Generator
 
 from .account.account_manager import AccountManager
@@ -109,6 +110,15 @@ def get_user(username: str):
         "last_name": user.last_name,
         "email": user.email,
     }
+
+@registry.handles(
+    rule="/profile", method="GET", response_body_schema={200: User()}
+)
+def get_profile():
+    """Get the profile from the global object inserted by the JWT"""
+    if g.user is not None:
+        return g.user
+    raise errors.Unauthorized("Not logged in yet.")
 
 
 @registry.handles(rule="/users", method="GET", response_body_schema={200: Users()})
